@@ -1,4 +1,4 @@
-﻿import type { Locale, Project } from './types';
+import type { Locale, Project } from './types';
 
 export const projects: Project[] = [
   {
@@ -13,13 +13,13 @@ export const projects: Project[] = [
       pt: {
         title: 'Mamonas Assassinas',
         category: '3D Tribute',
-        description: 'Modelagem de um sÃ­mbolo da banda brasileira Mamonas Assassinas como tributo visual.',
+        description: 'Modelagem de um símbolo da banda brasileira Mamonas Assassinas como tributo visual.',
         fullDescription:
-          'Um estudo autoral em Blender que transforma um sÃ­mbolo reconhecÃ­vel da cultura pop brasileira em peÃ§a 3D com atenÃ§Ã£o a forma, textura e iluminaÃ§Ã£o.',
+          'Um estudo autoral em Blender que transforma um símbolo reconhecível da cultura pop brasileira em peça 3D com atenção a forma, textura e iluminação.',
         objective:
-          'Criar uma homenagem visual com acabamento de portfÃ³lio, preservando a forÃ§a simbÃ³lica do tema e explorando leitura rÃ¡pida em imagem estÃ¡tica e vÃ­deo.',
+          'Criar uma homenagem visual com acabamento de portfólio, preservando a força simbólica do tema e explorando leitura rápida em imagem estática e vídeo.',
         process:
-          'O projeto foi desenvolvido com foco em modelagem, texturizaÃ§Ã£o e iluminaÃ§Ã£o, usando uma abordagem de estÃºdio para destacar volume, materialidade e presenÃ§a.'
+          'O projeto foi desenvolvido com foco em modelagem, texturização e iluminação, usando uma abordagem de estúdio para destacar volume, materialidade e presença.'
       },
       en: {
         title: 'Mamonas Assassinas',
@@ -53,20 +53,20 @@ export const projects: Project[] = [
       pt: {
         title: 'Smartphone Promotional',
         category: 'Product Film / 3D',
-        description: 'Modelagem de smartphone e estÃºdio virtual para uma peÃ§a comercial.',
+        description: 'Modelagem de smartphone e estúdio virtual para uma peça comercial.',
         fullDescription:
-          'Projeto de produto em 3D com linguagem publicitÃ¡ria, explorando hard surface, cÃ¢mera, iluminaÃ§Ã£o e composiÃ§Ã£o para destacar detalhes tÃ©cnicos do objeto.',
+          'Projeto de produto em 3D com linguagem publicitária, explorando hard surface, câmera, iluminação e composição para destacar detalhes técnicos do objeto.',
         objective:
-          'Construir uma peÃ§a promocional clara e premium, capaz de apresentar o produto com ritmo, acabamento e leitura comercial.',
+          'Construir uma peça promocional clara e premium, capaz de apresentar o produto com ritmo, acabamento e leitura comercial.',
         process:
-          'A produÃ§Ã£o combinou modelagem hard surface, criaÃ§Ã£o de ambiente de estÃºdio, texturizaÃ§Ã£o, iluminaÃ§Ã£o e decisÃµes de cÃ¢mera para gerar uma estÃ©tica limpa e fotorealista.'
+          'A produção combinou modelagem hard surface, criação de ambiente de estúdio, texturização, iluminação e decisões de câmera para gerar uma estética limpa e fotorealista.'
       },
       en: {
         title: 'Smartphone Promotional',
         category: 'Product Film / 3D',
         description: 'Modeling a smartphone and a virtual studio for a commercial piece.',
         fullDescription:
-          'A 3D product project with advertising language, exploring hard surface, camera, lighting and composition to highlight the objectâ€™s technical details.',
+          "A 3D product project with advertising language, exploring hard surface, camera, lighting and composition to highlight the object's technical details.",
         objective:
           'Build a clear and premium promotional piece that presents the product with rhythm, polish and commercial readability.',
         process:
@@ -86,13 +86,13 @@ export const projects: Project[] = [
       pt: {
         title: 'Light Lamp',
         category: '3D Animation',
-        description: 'AnimaÃ§Ã£o 3D explorando a interaÃ§Ã£o entre luz, sombra, materiais e cÃ¢mera.',
+        description: 'Animação 3D explorando a interação entre luz, sombra, materiais e câmera.',
         fullDescription:
-          'Um estudo de animaÃ§Ã£o 3D com foco no comportamento da luz e das sombras. A peÃ§a usa uma luminÃ¡ria minimalista para investigar como material, emissÃ£o e cÃ¢mera transformam um objeto simples em experiÃªncia visual.',
+          'Um estudo de animação 3D com foco no comportamento da luz e das sombras. A peça usa uma luminária minimalista para investigar como material, emissão e câmera transformam um objeto simples em experiência visual.',
         objective:
-          'Explorar iluminaÃ§Ã£o dinÃ¢mica, reflexos, profundidade de campo e renderizaÃ§Ã£o para criar uma peÃ§a imersiva e visualmente precisa.',
+          'Explorar iluminação dinâmica, reflexos, profundidade de campo e renderização para criar uma peça imersiva e visualmente precisa.',
         process:
-          'A luminÃ¡ria foi modelada com ferramentas de mesh e subdivisÃ£o no Blender, recebeu shaders PBR e emissÃ£o, e foi renderizada com Cycles para simular reflexos, sombras e atmosfera.'
+          'A luminária foi modelada com ferramentas de mesh e subdivisão no Blender, recebeu shaders PBR e emissão, e foi renderizada com Cycles para simular reflexos, sombras e atmosfera.'
       },
       en: {
         title: 'Light Lamp',
@@ -126,11 +126,11 @@ export const projects: Project[] = [
         category: 'Personal 3D Project',
         description: 'Projeto pessoal em que o workspace foi recriado em 3D.',
         fullDescription:
-          'Uma reproduÃ§Ã£o autoral do espaÃ§o de trabalho, usando observaÃ§Ã£o, modelagem hard surface e iluminaÃ§Ã£o para transformar um ambiente cotidiano em uma cena 3D controlada.',
+          'Uma reprodução autoral do espaço de trabalho, usando observação, modelagem hard surface e iluminação para transformar um ambiente cotidiano em uma cena 3D controlada.',
         objective:
-          'Registrar o prÃ³prio ambiente criativo como peÃ§a de portfÃ³lio, testando proporÃ§Ã£o, materialidade e leitura de cena.',
+          'Registrar o próprio ambiente criativo como peça de portfólio, testando proporção, materialidade e leitura de cena.',
         process:
-          'A produÃ§Ã£o partiu de referÃªncia fotogrÃ¡fica e avanÃ§ou por modelagem, texturizaÃ§Ã£o e iluminaÃ§Ã£o, buscando equilÃ­brio entre fidelidade e direÃ§Ã£o visual.'
+          'A produção partiu de referência fotográfica e avançou por modelagem, texturização e iluminação, buscando equilíbrio entre fidelidade e direção visual.'
       },
       en: {
         title: 'My Workspace',
@@ -160,11 +160,11 @@ export const projects: Project[] = [
       pt: {
         title: 'Blue Bird',
         category: 'Texturing Study',
-        description: 'Projeto da Unhide School voltado ao aprimoramento de texturizaÃ§Ã£o no Substance Painter.',
+        description: 'Projeto da Unhide School voltado ao aprimoramento de texturização no Substance Painter.',
         fullDescription:
-          'Um estudo focado em textura, materiais e acabamento fotorealista, desenvolvido para evoluir a leitura de superfÃ­cie e a construÃ§Ã£o de detalhe visual.',
+          'Um estudo focado em textura, materiais e acabamento fotorealista, desenvolvido para evoluir a leitura de superfície e a construção de detalhe visual.',
         objective:
-          'Aprimorar habilidades de texturizaÃ§Ã£o e lookdev, criando uma peÃ§a com materialidade convincente e boa leitura de iluminaÃ§Ã£o.',
+          'Aprimorar habilidades de texturização e lookdev, criando uma peça com materialidade convincente e boa leitura de iluminação.',
         process:
           'O trabalho combinou Maya 3D e Substance Painter para organizar o modelo, criar texturas e refinar o acabamento visual.'
       },
@@ -192,13 +192,13 @@ export const projects: Project[] = [
       pt: {
         title: 'Broadcast 3D',
         category: 'Broadcast Motion',
-        description: 'Modelagem, texturizaÃ§Ã£o, animaÃ§Ã£o e iluminaÃ§Ã£o em Cinema 4D, com composiÃ§Ã£o no After Effects.',
+        description: 'Modelagem, texturização, animação e iluminação em Cinema 4D, com composição no After Effects.',
         fullDescription:
-          'Projeto com linguagem de broadcast e motion 3D, combinando elementos tÃ©cnicos de modelagem, animaÃ§Ã£o, iluminaÃ§Ã£o e composiÃ§Ã£o para uma entrega audiovisual dinÃ¢mica.',
+          'Projeto com linguagem de broadcast e motion 3D, combinando elementos técnicos de modelagem, animação, iluminação e composição para uma entrega audiovisual dinâmica.',
         objective:
-          'Criar uma peÃ§a de motion com ritmo, acabamento tÃ©cnico e potencial de aplicaÃ§Ã£o em identidades visuais para telas e transmissÃ£o.',
+          'Criar uma peça de motion com ritmo, acabamento técnico e potencial de aplicação em identidades visuais para telas e transmissão.',
         process:
-          'A base foi produzida no Cinema 4D, passando por modelagem, textura, cÃ¢mera e iluminaÃ§Ã£o. A composiÃ§Ã£o e o acabamento foram feitos no After Effects.'
+          'A base foi produzida no Cinema 4D, passando por modelagem, textura, câmera e iluminação. A composição e o acabamento foram feitos no After Effects.'
       },
       en: {
         title: 'Broadcast 3D',

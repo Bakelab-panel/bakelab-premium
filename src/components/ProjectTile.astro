@@ -19,7 +19,7 @@ const copy = getCopy(project, locale);
     <div class:list={['relative overflow-hidden', index === 0 ? 'aspect-[16/9]' : 'aspect-[4/5]']}>
       {
         project.cover ? (
-          <img src={project.cover} alt={`${copy.title} â€” ${copy.category}`} class="h-full w-full object-cover grayscale-[22%] transition duration-700 group-hover:scale-[1.04] group-hover:grayscale-0" width="1200" height="900" loading="lazy" />
+          <img src={project.cover} alt={`${copy.title} — ${copy.category}`} class="h-full w-full object-cover grayscale-[22%] transition duration-700 group-hover:scale-[1.04] group-hover:grayscale-0" width="1200" height="900" loading="lazy" />
         ) : (
           <div class="h-full w-full bg-noise"></div>
         )

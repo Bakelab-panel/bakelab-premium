@@ -1,7 +1,7 @@
-﻿import type { SiteCopy } from './types';
+import type { SiteCopy } from './types';
 
 const whatsapp = encodeURIComponent(
-  'OlÃ¡, Eder! Vi o portfÃ³lio do !bakelab e gostaria de conversar sobre um projeto.'
+  'Olá, Eder! Vi o portfólio do !bakelab e gostaria de conversar sobre um projeto.'
 );
 
 export const sitePt: SiteCopy = {
@@ -11,16 +11,16 @@ export const sitePt: SiteCopy = {
   projectPath: '/pt/projetos',
   alternateHome: '/en',
   seo: {
-    title: '!bakelab â€” 3D, Motion Design & AI Filmmaking',
+    title: '!bakelab — 3D, Motion Design & AI Filmmaking',
     description:
-      'EstÃºdio criativo de Eder Azevedo focado em 3D, motion design, audiovisual e AI filmmaking, transformando ideias complexas em experiÃªncias visuais de impacto.',
+      'Estúdio criativo de Eder Azevedo focado em 3D, motion design, audiovisual e AI filmmaking, transformando ideias complexas em experiências visuais de impacto.',
     image: '/images/logos/logo-claro.png'
   },
   nav: [
-    { label: 'InÃ­cio', href: '/pt' },
+    { label: 'Início', href: '/pt' },
     { label: 'Projetos', href: '/pt/projetos' },
     { label: 'Sobre', href: '/pt#sobre' },
-    { label: 'ServiÃ§os', href: '/pt#servicos' },
+    { label: 'Serviços', href: '/pt#servicos' },
     { label: 'Contato', href: '/pt#contato' }
   ],
   labels: {
@@ -32,7 +32,7 @@ export const sitePt: SiteCopy = {
     contact: 'Entrar em contato',
     openProject: 'Explorar caso',
     back: 'Voltar aos projetos',
-    external: 'Abrir vÃ­deo',
+    external: 'Abrir vídeo',
     gallery: 'Galeria',
     tools: 'Ferramentas',
     processVideo: 'Timelapse do processo'
@@ -40,17 +40,17 @@ export const sitePt: SiteCopy = {
   hero: {
     kicker: 'Creative 3D & Motion Designer',
     title: '!bakelab',
-    subtitle: 'Transformamos ideias complexas em experiÃªncias visuais de impacto.',
+    subtitle: 'Transformamos ideias complexas em experiências visuais de impacto.',
     description:
-      'EstÃºdio criativo focado em 3D, motion, audiovisual e AI filmmaking para marcas, campanhas e narrativas digitais.',
-    location: 'Valinhos â€” SÃ£o Paulo, Brasil'
+      'Estúdio criativo focado em 3D, motion, audiovisual e AI filmmaking para marcas, campanhas e narrativas digitais.',
+    location: 'Valinhos — São Paulo, Brasil'
   },
   about: {
-    title: 'DireÃ§Ã£o visual para projetos que precisam parecer inevitÃ¡veis.',
+    title: 'Direção visual para projetos que precisam parecer inevitáveis.',
     paragraphs: [
-      'O !bakelab Ã© um estÃºdio criativo focado em audiovisual, 3D e motion design, especializado em transformar ideias complexas em experiÃªncias visuais claras, impactantes e contemporÃ¢neas.',
-      'Eder Azevedo Ã© designer com mais de 8 anos de experiÃªncia em design publicitÃ¡rio e pÃ³s-graduaÃ§Ã£o em desenvolvimento de jogos digitais. Sua atuaÃ§Ã£o combina tÃ©cnica, direÃ§Ã£o criativa e novas tecnologias.',
-      'Ã€ frente do !bakelab, desenvolve projetos que transitam entre o caos criativo e a precisÃ£o tÃ©cnica, explorando tambÃ©m inteligÃªncia artificial no filmmaking para criar narrativas eficientes e visualmente marcantes.'
+      'O !bakelab é um estúdio criativo focado em audiovisual, 3D e motion design, especializado em transformar ideias complexas em experiências visuais claras, impactantes e contemporâneas.',
+      'Eder Azevedo é designer com mais de 8 anos de experiência em design publicitário e pós-graduação em desenvolvimento de jogos digitais. Sua atuação combina técnica, direção criativa e novas tecnologias.',
+      'À frente do !bakelab, desenvolve projetos que transitam entre o caos criativo e a precisão técnica, explorando também inteligência artificial no filmmaking para criar narrativas eficientes e visualmente marcantes.'
     ],
     metrics: [
       { value: '8+', label: 'anos em publicidade' },
@@ -59,55 +59,55 @@ export const sitePt: SiteCopy = {
     ]
   },
   services: {
-    title: 'ServiÃ§os com acabamento de estÃºdio e pensamento de campanha.',
+    title: 'Serviços com acabamento de estúdio e pensamento de campanha.',
     intro: 'Um conjunto enxuto de entregas para transformar briefing em imagem premium.',
     items: [
-      { title: 'AnimaÃ§Ã£o 3D', description: 'Modelagem, lookdev, luz e animaÃ§Ã£o para produtos, sÃ­mbolos e cenas.' },
+      { title: 'Animação 3D', description: 'Modelagem, lookdev, luz e animação para produtos, símbolos e cenas.' },
       { title: 'Motion Design', description: 'Sistemas visuais em movimento para marcas, telas e narrativas.' },
-      { title: 'Audiovisual', description: 'DireÃ§Ã£o visual, ediÃ§Ã£o, composiÃ§Ã£o e pÃ³s-produÃ§Ã£o cinematogrÃ¡fica.' },
-      { title: 'AI Filmmaking', description: 'ExploraÃ§Ã£o e produÃ§Ã£o hÃ­brida com IA aplicada ao processo criativo.' },
-      { title: 'Filmes publicitÃ¡rios', description: 'PeÃ§as curtas para lanÃ§amentos, campanhas e presenÃ§a digital.' },
-      { title: 'Motion Identity', description: 'Identidade visual com ritmo, textura, cÃ¢mera e presenÃ§a audiovisual.' }
+      { title: 'Audiovisual', description: 'Direção visual, edição, composição e pós-produção cinematográfica.' },
+      { title: 'AI Filmmaking', description: 'Exploração e produção híbrida com IA aplicada ao processo criativo.' },
+      { title: 'Filmes publicitários', description: 'Peças curtas para lançamentos, campanhas e presença digital.' },
+      { title: 'Motion Identity', description: 'Identidade visual com ritmo, textura, câmera e presença audiovisual.' }
     ]
   },
   projects: {
     title: 'Projetos selecionados',
-    intro: 'TrÃªs recortes para leitura rÃ¡pida na home. O acervo completo fica em uma pÃ¡gina dedicada.',
+    intro: 'Três recortes para leitura rápida na home. O acervo completo fica em uma página dedicada.',
     archiveTitle: 'Arquivo de projetos',
-    archiveIntro: 'Todos os trabalhos disponÃ­veis nos materiais do estÃºdio, organizados para crescer sem refatorar o layout.'
+    archiveIntro: 'Todos os trabalhos disponíveis nos materiais do estúdio, organizados para crescer sem refatorar o layout.'
   },
   process: {
-    title: 'Processo de laboratÃ³rio, entrega de cinema.',
+    title: 'Processo de laboratório, entrega de cinema.',
     intro:
-      'Pesquisa, direÃ§Ã£o visual, experimentaÃ§Ã£o tÃ©cnica e refinamento convivem no mesmo fluxo para chegar ao frame certo.',
+      'Pesquisa, direção visual, experimentação técnica e refinamento convivem no mesmo fluxo para chegar ao frame certo.',
     steps: [
-      { title: 'DiagnÃ³stico', text: 'Objetivo, audiÃªncia, contexto de marca e restriÃ§Ãµes sÃ£o traduzidos em direÃ§Ã£o visual.' },
-      { title: 'ExploraÃ§Ã£o', text: 'Forma, cÃ¢mera, luz, movimento e IA entram em testes rÃ¡pidos atÃ© a imagem ganhar forÃ§a.' },
-      { title: 'ProduÃ§Ã£o', text: 'Modelagem, animaÃ§Ã£o, composiÃ§Ã£o, ediÃ§Ã£o e pÃ³s com atenÃ§Ã£o ao impacto final.' },
-      { title: 'Entrega', text: 'Arquivos preparados para campanha, social, filme, apresentaÃ§Ã£o ou portfÃ³lio.' }
+      { title: 'Diagnóstico', text: 'Objetivo, audiência, contexto de marca e restrições são traduzidos em direção visual.' },
+      { title: 'Exploração', text: 'Forma, câmera, luz, movimento e IA entram em testes rápidos até a imagem ganhar força.' },
+      { title: 'Produção', text: 'Modelagem, animação, composição, edição e pós com atenção ao impacto final.' },
+      { title: 'Entrega', text: 'Arquivos preparados para campanha, social, filme, apresentação ou portfólio.' }
     ],
     videoText:
-      'O timelapse funciona como registro do processo criativo: visÃ­vel para quem quer investigar, leve para quem sÃ³ quer navegar.'
+      'O timelapse funciona como registro do processo criativo: visível para quem quer investigar, leve para quem só quer navegar.'
   },
   stack: {
     title: 'Stack criativa',
     items: ['Blender', 'Cinema 4D', 'After Effects', 'DaVinci Resolve', 'Nuke', 'Photoshop', 'Premiere', 'ComfyUI', 'Seedance 2', 'VEO3', 'Nano Banana', 'Grok Image']
   },
   differentials: {
-    title: 'Entre o caos criativo e a precisÃ£o tÃ©cnica.',
+    title: 'Entre o caos criativo e a precisão técnica.',
     items: [
-      'Forte domÃ­nio tÃ©cnico em 3D e motion',
-      'IntegraÃ§Ã£o entre criatividade e tecnologia',
-      'ExperiÃªncia sÃ³lida em publicidade',
-      'TraduÃ§Ã£o de ideias complexas em soluÃ§Ãµes visuais claras',
-      'EstÃ©tica autoral com abordagem experimental',
-      'VisÃ£o hÃ­brida entre design, cinema e tecnologia',
-      'Uso estratÃ©gico de inteligÃªncia artificial'
+      'Forte domínio técnico em 3D e motion',
+      'Integração entre criatividade e tecnologia',
+      'Experiência sólida em publicidade',
+      'Tradução de ideias complexas em soluções visuais claras',
+      'Estética autoral com abordagem experimental',
+      'Visão híbrida entre design, cinema e tecnologia',
+      'Uso estratégico de inteligência artificial'
     ]
   },
   contact: {
     title: 'Uma conversa direta costuma ser o melhor briefing.',
-    text: 'Sem formulÃ¡rio. SÃ³ os canais certos para comeÃ§ar.',
+    text: 'Sem formulário. Só os canais certos para começar.',
     links: [
       { label: 'Instagram', value: '@bakelab.obj', href: 'https://www.instagram.com/bakelab.obj' },
       { label: 'LinkedIn', value: 'ed-azevedo', href: 'https://www.linkedin.com/in/ed-azevedo' },
@@ -117,6 +117,6 @@ export const sitePt: SiteCopy = {
   },
   footer: {
     line: '3D / Motion / Audiovisual / AI Filmmaking',
-    location: 'Valinhos â€” SÃ£o Paulo, Brasil'
+    location: 'Valinhos — São Paulo, Brasil'
   }
 };

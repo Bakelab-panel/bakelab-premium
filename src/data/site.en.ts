@@ -1,7 +1,7 @@
-﻿import type { SiteCopy } from './types';
+import type { SiteCopy } from './types';
 
 const whatsapp = encodeURIComponent(
-  'OlÃ¡, Eder! Vi o portfÃ³lio do !bakelab e gostaria de conversar sobre um projeto.'
+  'Olá, Eder! Vi o portfólio do !bakelab e gostaria de conversar sobre um projeto.'
 );
 
 export const siteEn: SiteCopy = {
@@ -11,7 +11,7 @@ export const siteEn: SiteCopy = {
   projectPath: '/en/projects',
   alternateHome: '/pt',
   seo: {
-    title: '!bakelab â€” 3D, Motion Design & AI Filmmaking',
+    title: '!bakelab — 3D, Motion Design & AI Filmmaking',
     description:
       'Creative studio by Eder Azevedo focused on 3D, motion design, audiovisual production and AI filmmaking, transforming complex ideas into impactful visual experiences.',
     image: '/images/logos/logo-claro.png'
@@ -24,7 +24,7 @@ export const siteEn: SiteCopy = {
     { label: 'Contact', href: '/en#contact' }
   ],
   labels: {
-    language: 'Mudar para portuguÃªs',
+    language: 'Mudar para português',
     menu: 'Open menu',
     close: 'Close menu',
     viewProjects: 'View projects',
@@ -43,7 +43,7 @@ export const siteEn: SiteCopy = {
     subtitle: 'Transforming complexity into visual impact.',
     description:
       'Creative studio focused on 3D, motion, audiovisual production and AI filmmaking for brands, campaigns and digital narratives.',
-    location: 'Valinhos â€” SÃ£o Paulo, Brazil'
+    location: 'Valinhos — São Paulo, Brazil'
   },
   about: {
     title: 'Visual direction for projects that need to feel inevitable.',
@@ -117,6 +117,6 @@ export const siteEn: SiteCopy = {
   },
   footer: {
     line: '3D / Motion / Audiovisual / AI Filmmaking',
-    location: 'Valinhos â€” SÃ£o Paulo, Brazil'
+    location: 'Valinhos — São Paulo, Brazil'
   }
 };
