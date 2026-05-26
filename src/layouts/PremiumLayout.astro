@@ -1,0 +1,86 @@
+﻿---
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import type { SiteCopy } from '@data/types';
+import '@styles/global.css';
+
+type Props = {
+  site: SiteCopy;
+  title?: string;
+  description?: string;
+  image?: string;
+  alternateHref?: string;
+};
+
+const {
+  site,
+  title = site.seo.title,
+  description = site.seo.description,
+  image = site.seo.image,
+  alternateHref = site.alternateHome
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://bakelab-premium.example.com').toString();
+const ogImage = new URL(image, Astro.site ?? 'https://bakelab-premium.example.com').toString();
+---
+
+<!doctype html>
+<html lang={site.lang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/images/logos/icone-claro.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script is:inline>document.documentElement.dataset.js = 'true';</script>
+  </head>
+  <body>
+    <Header site={site} alternateHref={alternateHref} />
+    <main>
+      <slot />
+    </main>
+    <Footer site={site} />
+    <script is:inline>
+      const toggle = document.querySelector('[data-menu-toggle]');
+      const menu = document.querySelector('[data-mobile-menu]');
+
+      function setMenu(open) {
+        if (!toggle || !menu) return;
+        toggle.setAttribute('aria-expanded', String(open));
+        menu.toggleAttribute('data-open', open);
+      }
+
+      toggle?.addEventListener('click', () => {
+        setMenu(toggle.getAttribute('aria-expanded') !== 'true');
+      });
+
+      document.querySelectorAll('[data-mobile-menu] a').forEach((link) => {
+        link.addEventListener('click', () => setMenu(false));
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.setAttribute('data-visible', 'true');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      document.querySelectorAll('[data-reveal]').forEach((node) => observer.observe(node));
+    </script>
+  </body>
+</html>

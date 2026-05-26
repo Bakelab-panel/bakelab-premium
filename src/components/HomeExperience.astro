@@ -1,0 +1,191 @@
+﻿---
+import ProjectTile from '@components/ProjectTile.astro';
+import { assets } from '@data/assets';
+import type { Project, SiteCopy } from '@data/types';
+
+type Props = {
+  site: SiteCopy;
+  projects: Project[];
+};
+
+const { site, projects } = Astro.props;
+const heroImage = projects.find((project) => project.cover)?.cover;
+const ids = {
+  home: site.locale === 'pt' ? 'inicio' : 'home',
+  about: site.locale === 'pt' ? 'sobre' : 'about',
+  services: site.locale === 'pt' ? 'servicos' : 'services',
+  contact: site.locale === 'pt' ? 'contato' : 'contact'
+};
+---
+
+<section id={ids.home} class="relative isolate min-h-screen overflow-hidden pt-16">
+  <div class="absolute inset-0 -z-30 bg-noise"></div>
+  <div class="absolute inset-0 -z-20 premium-grid opacity-75"></div>
+  {heroImage && <img src={heroImage} alt="" class="absolute inset-0 -z-10 h-full w-full object-cover opacity-32 grayscale" width="1600" height="1200" loading="eager" />}
+  <div class="absolute inset-0 -z-10 bg-[linear-gradient(90deg,#030407_0%,rgba(3,4,7,0.92)_34%,rgba(3,4,7,0.58)_72%,#030407_100%)]"></div>
+
+  <div class="container-px grid min-h-[calc(100vh-4rem)] items-end gap-10 pb-10 pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:pb-14">
+    <div class="pb-6" data-reveal>
+      <p class="eyebrow">{site.hero.kicker}</p>
+      <h1 class="mt-5 max-w-5xl font-display text-7xl font-black leading-[0.78] tracking-tight text-platinum sm:text-8xl lg:text-[9.6rem]">
+        {site.hero.title}
+      </h1>
+      <p class="mt-7 max-w-3xl text-3xl font-black leading-tight text-platinum sm:text-5xl">{site.hero.subtitle}</p>
+      <p class="mt-6 max-w-2xl text-base leading-8 text-mist sm:text-lg">{site.hero.description}</p>
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a href={site.projectPath} class="premium-button">{site.labels.viewProjects}</a>
+        <a href={`#${ids.contact}`} class="ghost-button">{site.labels.contact}</a>
+      </div>
+    </div>
+
+    <aside class="glass-panel mb-6 p-4 sm:p-5" data-reveal>
+      <p class="eyebrow">Studio Coordinates</p>
+      <div class="mt-6 grid gap-4">
+        <div class="border-t border-platinum/10 pt-4">
+          <p class="font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ash">Location</p>
+          <p class="mt-2 text-lg font-semibold text-platinum">{site.hero.location}</p>
+        </div>
+        <div class="border-t border-platinum/10 pt-4">
+          <p class="font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ash">Focus</p>
+          <p class="mt-2 text-lg font-semibold text-platinum">3D / Motion / AI Filmmaking / Audiovisual</p>
+        </div>
+        <div class="border-t border-platinum/10 pt-4">
+          <p class="font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ash">Mode</p>
+          <p class="mt-2 text-lg font-semibold text-platinum">Creative chaos / technical precision</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section id={ids.about} class="premium-section border-y border-platinum/10 bg-obsidian">
+  <div class="container-px grid gap-10 lg:grid-cols-[0.72fr_1.28fr]">
+    <div data-reveal>
+      <p class="eyebrow">About</p>
+      <h2 class="mt-4 display-title">{site.about.title}</h2>
+    </div>
+    <div class="grid gap-8" data-reveal>
+      <div class="grid gap-5 text-base leading-8 text-mist sm:text-lg">
+        {site.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      <div class="grid gap-3 sm:grid-cols-3">
+        {site.about.metrics.map((metric) => (
+          <div class="glass-panel p-5">
+            <p class="font-display text-4xl font-black text-ember">{metric.value}</p>
+            <p class="mt-2 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-ash">{metric.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id={ids.services} class="premium-section bg-carbon">
+  <div class="container-px">
+    <div class="max-w-4xl" data-reveal>
+      <p class="eyebrow">Services</p>
+      <h2 class="mt-4 display-title">{site.services.title}</h2>
+      <p class="mt-5 max-w-2xl text-lg leading-8 text-mist">{site.services.intro}</p>
+    </div>
+    <div class="mt-12 grid gap-px overflow-hidden border border-platinum/10 bg-platinum/10 md:grid-cols-2 xl:grid-cols-3">
+      {site.services.items.map((service, index) => (
+        <article class="bg-carbon p-6 transition hover:bg-graphite" data-reveal>
+          <p class="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-ember">{String(index + 1).padStart(2, '0')}</p>
+          <h3 class="mt-10 font-display text-3xl font-black text-platinum">{service.title}</h3>
+          <p class="mt-4 text-sm leading-7 text-mist">{service.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="premium-section bg-obsidian">
+  <div class="container-px">
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between" data-reveal>
+      <div>
+        <p class="eyebrow">Projects</p>
+        <h2 class="mt-4 display-title">{site.projects.title}</h2>
+        <p class="mt-5 max-w-2xl text-lg leading-8 text-mist">{site.projects.intro}</p>
+      </div>
+      <a class="ghost-button shrink-0" href={site.projectPath}>{site.labels.viewAllProjects}</a>
+    </div>
+    <div class="mt-12 grid gap-4 lg:grid-cols-3">
+      {projects.map((project, index) => (
+        <ProjectTile project={project} locale={site.locale} href={`${site.projectPath}/${project.slug}`} index={index} label={site.labels.openProject} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="premium-section border-y border-platinum/10 bg-carbon">
+  <div class="container-px grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+    <div data-reveal>
+      <p class="eyebrow">Process</p>
+      <h2 class="mt-4 display-title">{site.process.title}</h2>
+      <p class="mt-5 text-lg leading-8 text-mist">{site.process.intro}</p>
+    </div>
+    <div class="grid gap-3" data-reveal>
+      {site.process.steps.map((step) => (
+        <article class="glass-panel grid gap-4 p-5 sm:grid-cols-[0.36fr_1fr]">
+          <h3 class="font-display text-2xl font-black text-platinum">{step.title}</h3>
+          <p class="text-sm leading-7 text-mist">{step.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+  {
+    assets.timelapse ? (
+      <div class="container-px mt-10" data-reveal>
+        <div class="glass-panel p-3">
+          <div class="mb-3 flex items-center justify-between gap-4 px-1 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ash">
+            <span>{site.labels.processVideo}</span>
+            <span>metadata only</span>
+          </div>
+          <video class="w-full" controls preload="metadata">
+            <source src={assets.timelapse} type="video/mp4" />
+          </video>
+          <p class="px-1 pt-4 text-sm leading-7 text-mist">{site.process.videoText}</p>
+        </div>
+      </div>
+    ) : null
+  }
+</section>
+
+<section class="premium-section bg-obsidian">
+  <div class="container-px grid gap-10 lg:grid-cols-[0.82fr_1.18fr]">
+    <div data-reveal>
+      <p class="eyebrow">Stack / Difference</p>
+      <h2 class="mt-4 display-title">{site.differentials.title}</h2>
+    </div>
+    <div class="grid gap-8">
+      <div class="flex flex-wrap gap-2" data-reveal>
+        {site.stack.items.map((item) => <span class="tech-chip">{item}</span>)}
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2" data-reveal>
+        {site.differentials.items.map((item) => (
+          <div class="border border-platinum/10 bg-carbon p-4">
+            <p class="text-sm leading-7 text-mist">{item}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id={ids.contact} class="premium-section border-t border-platinum/10 bg-noise">
+  <div class="container-px grid gap-10 lg:grid-cols-[1fr_1fr]">
+    <div data-reveal>
+      <p class="eyebrow">Contact</p>
+      <h2 class="mt-4 display-title">{site.contact.title}</h2>
+      <p class="mt-5 text-lg leading-8 text-mist">{site.contact.text}</p>
+    </div>
+    <div class="grid gap-3" data-reveal>
+      {site.contact.links.map((link) => (
+        <a href={link.href} class="group flex flex-col gap-2 border border-platinum/10 bg-obsidian/70 p-5 transition hover:border-ember sm:flex-row sm:items-center sm:justify-between" target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noreferrer' : undefined}>
+          <span class="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-ember">{link.label}</span>
+          <span class="text-base text-mist transition group-hover:text-platinum">{link.value}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

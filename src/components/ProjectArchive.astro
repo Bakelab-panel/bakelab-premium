@@ -1,0 +1,28 @@
+﻿---
+import ProjectTile from '@components/ProjectTile.astro';
+import type { Project, SiteCopy } from '@data/types';
+
+type Props = {
+  site: SiteCopy;
+  projects: Project[];
+};
+
+const { site, projects } = Astro.props;
+---
+
+<section class="relative overflow-hidden pt-20">
+  <div class="absolute inset-0 -z-10 bg-noise"></div>
+  <div class="absolute inset-0 -z-10 premium-grid opacity-60"></div>
+  <div class="container-px py-14 sm:py-20">
+    <div class="max-w-4xl" data-reveal>
+      <p class="eyebrow">Archive</p>
+      <h1 class="mt-5 display-title">{site.projects.archiveTitle}</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-mist">{site.projects.archiveIntro}</p>
+    </div>
+    <div class="mt-12 grid gap-4 lg:grid-cols-3">
+      {projects.map((project, index) => (
+        <ProjectTile project={project} locale={site.locale} href={`${site.projectPath}/${project.slug}`} index={index} label={site.labels.openProject} />
+      ))}
+    </div>
+  </div>
+</section>

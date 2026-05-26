@@ -1,0 +1,26 @@
+﻿---
+import ProjectDetail from '@components/ProjectDetail.astro';
+import PremiumLayout from '@layouts/PremiumLayout.astro';
+import { getCopy, projects } from '@data/projects';
+import { sitePt } from '@data/site.pt';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project }
+  }));
+}
+
+const { project } = Astro.props;
+const copy = getCopy(project, 'pt');
+---
+
+<PremiumLayout
+  site={sitePt}
+  title={`${copy.title} â€” !bakelab`}
+  description={copy.description}
+  image={project.cover ?? sitePt.seo.image}
+  alternateHref={`/en/projects/${project.slug}`}
+>
+  <ProjectDetail site={sitePt} project={project} />
+</PremiumLayout>

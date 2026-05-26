@@ -1,0 +1,43 @@
+﻿---
+import { getCopy } from '@data/projects';
+import type { Locale, Project } from '@data/types';
+
+type Props = {
+  project: Project;
+  locale: Locale;
+  href: string;
+  index: number;
+  label: string;
+};
+
+const { project, locale, href, index, label } = Astro.props;
+const copy = getCopy(project, locale);
+---
+
+<article class:list={['group relative overflow-hidden border border-platinum/10 bg-graphite shadow-premium', index === 0 ? 'lg:col-span-2' : ''] } data-reveal>
+  <a href={href} class="block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember">
+    <div class:list={['relative overflow-hidden', index === 0 ? 'aspect-[16/9]' : 'aspect-[4/5]']}>
+      {
+        project.cover ? (
+          <img src={project.cover} alt={`${copy.title} â€” ${copy.category}`} class="h-full w-full object-cover grayscale-[22%] transition duration-700 group-hover:scale-[1.04] group-hover:grayscale-0" width="1200" height="900" loading="lazy" />
+        ) : (
+          <div class="h-full w-full bg-noise"></div>
+        )
+      }
+      <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/20 to-transparent"></div>
+      <div class="absolute left-4 top-4 flex gap-2">
+        <span class="border border-platinum/15 bg-obsidian/65 px-3 py-2 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-mist backdrop-blur">{String(index + 1).padStart(2, '0')}</span>
+        {project.year && <span class="border border-platinum/15 bg-obsidian/65 px-3 py-2 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-mist backdrop-blur">{project.year}</span>}
+      </div>
+    </div>
+    <div class="p-5 sm:p-6">
+      <p class="eyebrow">{copy.category}</p>
+      <h3 class="mt-3 font-display text-3xl font-black leading-none text-platinum">{copy.title}</h3>
+      <p class="mt-4 max-w-2xl text-sm leading-6 text-mist">{copy.description}</p>
+      <div class="mt-5 flex flex-wrap gap-2">
+        {project.tools.slice(0, 4).map((tool) => <span class="tech-chip">{tool}</span>)}
+      </div>
+      <p class="mt-6 font-mono text-xs uppercase tracking-[0.24em] text-ember">{label}</p>
+    </div>
+  </a>
+</article>

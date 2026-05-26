@@ -1,0 +1,10 @@
+﻿---
+import ProjectArchive from '@components/ProjectArchive.astro';
+import PremiumLayout from '@layouts/PremiumLayout.astro';
+import { projects } from '@data/projects';
+import { sitePt } from '@data/site.pt';
+---
+
+<PremiumLayout site={sitePt} title="Projetos â€” !bakelab" description={sitePt.projects.archiveIntro} alternateHref="/en/projects">
+  <ProjectArchive site={sitePt} projects={projects} />
+</PremiumLayout>

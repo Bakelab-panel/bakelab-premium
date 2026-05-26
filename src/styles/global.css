@@ -1,0 +1,112 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    background: #030407;
+  }
+
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 50% -20%, rgba(239, 68, 35, 0.14), transparent 34%),
+      linear-gradient(180deg, #030407 0%, #080706 48%, #030407 100%);
+    color: #f3f0e8;
+    text-rendering: geometricPrecision;
+  }
+
+  ::selection {
+    background: #ef4423;
+    color: #030407;
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  .container-px {
+    @apply mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8;
+  }
+
+  .premium-section {
+    @apply py-16 sm:py-20 lg:py-28;
+  }
+
+  .eyebrow {
+    @apply font-mono text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-ember;
+  }
+
+  .display-title {
+    @apply font-display text-4xl font-black leading-[0.92] tracking-tight text-platinum sm:text-5xl lg:text-7xl;
+  }
+
+  .premium-button {
+    @apply inline-flex min-h-12 items-center justify-center border border-ember/55 bg-ember px-5 py-3 text-xs font-black uppercase tracking-[0.22em] text-obsidian transition hover:bg-transparent hover:text-ember focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember;
+  }
+
+  .ghost-button {
+    @apply inline-flex min-h-12 items-center justify-center border border-platinum/15 px-5 py-3 text-xs font-black uppercase tracking-[0.22em] text-platinum transition hover:border-ember hover:text-ember focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember;
+  }
+
+  .glass-panel {
+    @apply border border-platinum/10 bg-carbon/75 shadow-premium backdrop-blur-xl;
+  }
+
+  .tech-chip {
+    @apply inline-flex border border-platinum/10 bg-obsidian/80 px-3 py-2 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-mist;
+  }
+
+  .mobile-menu {
+    display: none;
+  }
+
+  .mobile-menu[data-open] {
+    display: block;
+  }
+}
+
+@layer utilities {
+  [data-js='true'] [data-reveal] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 700ms ease,
+      transform 700ms ease;
+  }
+
+  [data-js='true'] [data-reveal][data-visible='true'] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .premium-grid {
+    background-image:
+      linear-gradient(rgba(243, 240, 232, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(243, 240, 232, 0.035) 1px, transparent 1px);
+    background-size: 42px 42px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+
+    [data-js='true'] [data-reveal] {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

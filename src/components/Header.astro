@@ -1,0 +1,63 @@
+﻿---
+import { assets } from '@data/assets';
+import type { SiteCopy } from '@data/types';
+
+type Props = {
+  site: SiteCopy;
+  alternateHref: string;
+};
+
+const { site, alternateHref } = Astro.props;
+---
+
+<header class="fixed inset-x-0 top-0 z-50 border-b border-platinum/10 bg-obsidian/82 backdrop-blur-xl">
+  <div class="container-px flex h-16 items-center justify-between">
+    <a href={site.basePath} class="flex items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember" aria-label="!bakelab">
+      {
+        assets.logo ? (
+          <img src={assets.logo} alt="!bakelab" class="h-7 w-auto opacity-95" width="157" height="40" loading="eager" />
+        ) : (
+          <span class="font-display text-xl font-black">!bakelab</span>
+        )
+      }
+    </a>
+
+    <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary navigation">
+      {site.nav.map((item) => (
+        <a class="font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ash transition hover:text-ember" href={item.href}>
+          {item.label}
+        </a>
+      ))}
+      <a class="border border-platinum/15 px-3 py-2 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-mist transition hover:border-ember hover:text-ember" href={alternateHref}>
+        {site.labels.language}
+      </a>
+    </nav>
+
+    <button
+      type="button"
+      class="inline-flex h-11 w-11 items-center justify-center border border-platinum/15 text-platinum transition hover:border-ember hover:text-ember focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember lg:hidden"
+      aria-label={site.labels.menu}
+      aria-expanded="false"
+      data-menu-toggle
+    >
+      <span aria-hidden="true" class="grid gap-1.5">
+        <span class="block h-px w-5 bg-current"></span>
+        <span class="block h-px w-5 bg-current"></span>
+        <span class="block h-px w-5 bg-current"></span>
+      </span>
+    </button>
+  </div>
+
+  <nav class="mobile-menu border-t border-platinum/10 bg-obsidian px-4 py-4 lg:hidden" aria-label="Mobile navigation" data-mobile-menu>
+    <div class="mx-auto flex max-w-[1500px] flex-col gap-2">
+      {site.nav.map((item) => (
+        <a class="border border-platinum/10 px-4 py-3 font-mono text-xs uppercase tracking-[0.22em] text-mist" href={item.href}>
+          {item.label}
+        </a>
+      ))}
+      <a class="border border-ember/45 px-4 py-3 text-center font-mono text-xs uppercase tracking-[0.22em] text-ember" href={alternateHref}>
+        {site.labels.language}
+      </a>
+    </div>
+  </nav>
+</header>

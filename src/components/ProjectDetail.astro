@@ -1,0 +1,108 @@
+﻿---
+import { getCopy } from '@data/projects';
+import type { Project, SiteCopy } from '@data/types';
+
+type Props = {
+  site: SiteCopy;
+  project: Project;
+};
+
+const { site, project } = Astro.props;
+const copy = getCopy(project, site.locale);
+const backHref = site.projectPath;
+const contactHref = `${site.basePath}${site.locale === 'pt' ? '#contato' : '#contact'}`;
+const heroImage = project.cover ?? project.gallery[0];
+const labels =
+  site.locale === 'pt'
+    ? { objective: 'Objetivo', process: 'Processo', description: 'DescriÃ§Ã£o', year: 'Ano', client: 'Cliente', category: 'Categoria' }
+    : { objective: 'Objective', process: 'Process', description: 'Description', year: 'Year', client: 'Client', category: 'Category' };
+---
+
+<article class="pt-20">
+  <header class="relative isolate overflow-hidden border-b border-platinum/10 bg-obsidian">
+    <div class="absolute inset-0 -z-20 bg-noise"></div>
+    {heroImage && <img src={heroImage} alt="" class="absolute inset-0 -z-10 h-full w-full object-cover opacity-28 grayscale" width="1600" height="1000" loading="eager" />}
+    <div class="absolute inset-0 -z-10 bg-[linear-gradient(90deg,#030407_0%,rgba(3,4,7,0.88)_48%,rgba(3,4,7,0.56)_100%)]"></div>
+
+    <div class="container-px grid gap-10 py-14 sm:py-20 lg:grid-cols-[0.86fr_1.14fr]">
+      <div data-reveal>
+        <a href={backHref} class="font-mono text-xs uppercase tracking-[0.24em] text-ember transition hover:text-platinum">â† {site.labels.back}</a>
+        <p class="eyebrow mt-10">{copy.category}</p>
+        <h1 class="mt-4 font-display text-6xl font-black leading-[0.82] tracking-tight text-platinum sm:text-7xl lg:text-8xl">
+          {copy.title}
+        </h1>
+        <p class="mt-7 max-w-2xl text-lg leading-8 text-mist">{copy.fullDescription}</p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          {project.externalLink && (
+            <a href={project.externalLink} target="_blank" rel="noreferrer" class="premium-button">{site.labels.external}</a>
+          )}
+          <a href={contactHref} class="ghost-button">{site.labels.contact}</a>
+        </div>
+      </div>
+
+      <aside class="glass-panel self-end p-5" data-reveal>
+        <p class="eyebrow">{site.labels.tools}</p>
+        <div class="mt-5 flex flex-wrap gap-2">
+          {project.tools.map((tool) => <span class="tech-chip">{tool}</span>)}
+        </div>
+        <dl class="mt-8 grid gap-4 border-t border-platinum/10 pt-5 text-sm">
+          {project.year && (
+            <div class="flex justify-between gap-4">
+              <dt class="text-ash">{labels.year}</dt>
+              <dd class="text-platinum">{project.year}</dd>
+            </div>
+          )}
+          {project.client && (
+            <div class="flex justify-between gap-4">
+              <dt class="text-ash">{labels.client}</dt>
+              <dd class="text-platinum">{project.client}</dd>
+            </div>
+          )}
+          <div class="flex justify-between gap-4">
+            <dt class="text-ash">{labels.category}</dt>
+            <dd class="text-platinum">{copy.category}</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </header>
+
+  <section class="premium-section bg-carbon">
+    <div class="container-px grid gap-5 lg:grid-cols-3">
+      <section class="glass-panel p-6" data-reveal>
+        <p class="eyebrow">{labels.objective}</p>
+        <p class="mt-5 text-sm leading-7 text-mist">{copy.objective}</p>
+      </section>
+      <section class="glass-panel p-6" data-reveal>
+        <p class="eyebrow">{labels.process}</p>
+        <p class="mt-5 text-sm leading-7 text-mist">{copy.process}</p>
+      </section>
+      <section class="glass-panel p-6" data-reveal>
+        <p class="eyebrow">{labels.description}</p>
+        <p class="mt-5 text-sm leading-7 text-mist">{copy.description}</p>
+      </section>
+    </div>
+  </section>
+
+  <section class="premium-section border-t border-platinum/10 bg-obsidian">
+    <div class="container-px">
+      <p class="eyebrow" data-reveal>{site.labels.gallery}</p>
+      <div class="mt-8 grid gap-4 md:grid-cols-2">
+        {project.gallery.map((image, index) => (
+          <img
+            src={image}
+            alt={`${copy.title} gallery image ${index + 1}`}
+            class:list={[
+              'w-full border border-platinum/10 bg-carbon object-cover shadow-premium',
+              index === 0 ? 'md:col-span-2' : 'aspect-[4/3]'
+            ]}
+            width="1400"
+            height="900"
+            loading="lazy"
+            data-reveal
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</article>

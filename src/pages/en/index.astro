@@ -1,0 +1,12 @@
+﻿---
+import HomeExperience from '@components/HomeExperience.astro';
+import PremiumLayout from '@layouts/PremiumLayout.astro';
+import { getHomeProjects } from '@data/projects';
+import { siteEn } from '@data/site.en';
+
+const projects = getHomeProjects();
+---
+
+<PremiumLayout site={siteEn} alternateHref="/pt">
+  <HomeExperience site={siteEn} projects={projects} />
+</PremiumLayout>
