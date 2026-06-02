@@ -257,7 +257,12 @@ const projects = authenticated ? await listProjects({ includeInactive: true }) :
           const formData = new FormData(loginForm);
           const response = await fetch(loginEndpoint, {
             method: 'POST',
-            body: formData
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              password: String(formData.get('password') || '')
+            })
           });
           const payload = await response.json();
 

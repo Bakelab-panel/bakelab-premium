@@ -9,8 +9,16 @@ import {
 import { hasAdminPassword } from '@lib/admin/config';
 
 export const POST: APIRoute = async ({ request, cookies }) => {
-  const formData = await request.formData();
-  const password = String(formData.get('password') || '');
+  const contentType = request.headers.get('content-type') || '';
+  let password = '';
+
+  if (contentType.includes('application/json')) {
+    const payload = (await request.json()) as { password?: string };
+    password = String(payload.password || '');
+  } else {
+    const formData = await request.formData();
+    password = String(formData.get('password') || '');
+  }
 
   if (!hasAdminPassword()) {
     return Response.json(
