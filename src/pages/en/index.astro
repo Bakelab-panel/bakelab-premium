@@ -1,10 +1,10 @@
 ﻿---
 import HomeExperience from '@components/HomeExperience.astro';
 import PremiumLayout from '@layouts/PremiumLayout.astro';
-import { getHomeProjects } from '@data/projects';
+import { getHomeProjects } from '@lib/project-store';
 import { siteEn } from '@data/site.en';
 
-const projects = getHomeProjects();
+const projects = await getHomeProjects();
 ---
 
 <PremiumLayout site={siteEn} alternateHref="/pt">

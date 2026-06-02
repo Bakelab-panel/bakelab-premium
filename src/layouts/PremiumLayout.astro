@@ -30,6 +30,7 @@ const ogImage = new URL(image, Astro.site ?? 'https://bakelab-premium.example.co
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="stylesheet" href="https://use.typekit.net/gxb2kcc.css" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -81,6 +82,25 @@ const ogImage = new URL(image, Astro.site ?? 'https://bakelab-premium.example.co
       );
 
       document.querySelectorAll('[data-reveal]').forEach((node) => observer.observe(node));
+
+      const autoplayObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const video = entry.target;
+            if (!(video instanceof HTMLVideoElement)) return;
+
+            if (entry.isIntersecting) {
+              video.play().catch(() => {});
+              return;
+            }
+
+            video.pause();
+          });
+        },
+        { threshold: 0.65 }
+      );
+
+      document.querySelectorAll('[data-autoplay-on-view]').forEach((node) => autoplayObserver.observe(node));
     </script>
   </body>
 </html>

@@ -1,26 +1,37 @@
 ﻿---
 import ProjectDetail from '@components/ProjectDetail.astro';
 import PremiumLayout from '@layouts/PremiumLayout.astro';
-import { getCopy, projects } from '@data/projects';
+import { getCopy } from '@data/projects';
+import { getProjectBySlug } from '@lib/project-store';
 import { sitePt } from '@data/site.pt';
-
-export function getStaticPaths() {
-  return projects.map((project) => ({
-    params: { slug: project.slug },
-    props: { project }
-  }));
-}
-
-const { project } = Astro.props;
-const copy = getCopy(project, 'pt');
+const slug = Astro.params.slug ?? '';
+const project = slug ? await getProjectBySlug(slug) : null;
+const copy = project ? getCopy(project, 'pt') : null;
 ---
 
-<PremiumLayout
-  site={sitePt}
-  title={`${copy.title} — !bakelab`}
-  description={copy.description}
-  image={project.cover ?? sitePt.seo.image}
-  alternateHref={`/en/projects/${project.slug}`}
->
-  <ProjectDetail site={sitePt} project={project} />
-</PremiumLayout>
+{
+  project && copy ? (
+    <PremiumLayout
+      site={sitePt}
+      title={`${copy.title} — !bakelab`}
+      description={copy.description}
+      image={project.cover ?? sitePt.seo.image}
+      alternateHref={`/en/projects/${project.slug}`}
+    >
+      <ProjectDetail site={sitePt} project={project} />
+    </PremiumLayout>
+  ) : (
+    (() => {
+      Astro.response.status = 404;
+      return (
+        <PremiumLayout site={sitePt} title="Projeto nao encontrado — !bakelab" description="O projeto solicitado nao esta disponivel.">
+          <section class="container-px premium-section pt-24">
+            <p class="eyebrow">404</p>
+            <h1 class="mt-4 display-title">Projeto nao encontrado</h1>
+            <p class="mt-5 max-w-2xl text-lg leading-8 text-mist">Este projeto esta indisponivel ou foi desativado no painel administrativo.</p>
+          </section>
+        </PremiumLayout>
+      );
+    })()
+  )
+}

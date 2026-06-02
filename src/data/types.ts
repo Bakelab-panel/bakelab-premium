@@ -85,6 +85,7 @@ export type ProjectCopy = {
 
 export type Project = {
   slug: string;
+  active?: boolean;
   year?: string;
   client?: string;
   cover?: string;

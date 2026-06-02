@@ -1,8 +1,10 @@
 ﻿---
 import ProjectArchive from '@components/ProjectArchive.astro';
 import PremiumLayout from '@layouts/PremiumLayout.astro';
-import { projects } from '@data/projects';
+import { listProjects } from '@lib/project-store';
 import { siteEn } from '@data/site.en';
+
+const projects = await listProjects();
 ---
 
 <PremiumLayout site={siteEn} title="Projects — !bakelab" description={siteEn.projects.archiveIntro} alternateHref="/pt/projetos">

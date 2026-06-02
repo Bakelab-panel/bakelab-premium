@@ -15,9 +15,9 @@ export default {
         violet: '#B7A5FF'
       },
       fontFamily: {
-        display: ['"Snaga Uni Display"', '"Space Grotesk"', 'Poppins', 'sans-serif'],
-        sans: ['Manrope', 'Inter', 'Poppins', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'Consolas', 'monospace']
+        display: ['"snaga-unicase-display"', 'sans-serif'],
+        sans: ['"snaga-unicase-display"', 'sans-serif'],
+        mono: ['"snaga-unicase-display"', 'sans-serif']
       },
       boxShadow: {
         premium: '0 28px 90px rgba(0, 0, 0, 0.5)',

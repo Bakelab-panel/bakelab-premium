@@ -1,0 +1,594 @@
+---
+import '@styles/global.css';
+
+import { isAdminAuthenticated } from '@lib/admin/auth';
+import { ADMIN_PANEL_SEGMENT, hasAdminPassword } from '@lib/admin/config';
+import { listProjects } from '@lib/project-store';
+
+const matchesPanel = Astro.params.panel === ADMIN_PANEL_SEGMENT;
+if (!matchesPanel) {
+  Astro.response.status = 404;
+}
+
+const authenticated = matchesPanel && isAdminAuthenticated(Astro.cookies);
+const projects = authenticated ? await listProjects({ includeInactive: true }) : [];
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <link rel="stylesheet" href="https://use.typekit.net/gxb2kcc.css" />
+    <title>Owner Panel</title>
+  </head>
+  <body class="min-h-screen bg-obsidian text-platinum">
+    {
+      !matchesPanel ? (
+        <main class="container-px flex min-h-screen items-center justify-center py-16">
+          <div class="glass-panel max-w-lg p-8 text-center">
+            <p class="eyebrow">404</p>
+            <h1 class="mt-4 display-title">Panel not found</h1>
+            <p class="mt-5 text-base leading-8 text-mist">This route does not exist.</p>
+          </div>
+        </main>
+      ) : (
+        <main class="container-px py-8 sm:py-10 lg:py-12">
+          <div class="mb-8 flex flex-col gap-4 border-b border-platinum/10 pb-6 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p class="eyebrow">Owner Panel</p>
+              <h1 class="mt-4 font-display text-5xl font-black leading-[0.9] text-platinum sm:text-6xl">Project Control</h1>
+              <p class="mt-4 max-w-2xl text-base leading-8 text-mist">
+                Add, edit, deactivate or remove projects, then publish the updated portfolio through the same source of truth.
+              </p>
+            </div>
+            <div class="text-sm leading-7 text-ash">
+              <p>Secret route: /{ADMIN_PANEL_SEGMENT}</p>
+              <p>Storage: {import.meta.env.BLOB_READ_WRITE_TOKEN ? 'Vercel Blob' : 'Local dev fallback'}</p>
+            </div>
+          </div>
+
+          {
+            !hasAdminPassword() ? (
+              <section class="glass-panel max-w-2xl p-6 sm:p-8">
+                <p class="eyebrow">Configuration required</p>
+                <h2 class="mt-4 font-display text-3xl font-black text-platinum">ADMIN_PASSWORD is missing</h2>
+                <p class="mt-4 text-base leading-8 text-mist">
+                  Set `ADMIN_PASSWORD` in your local `.env` and in the Vercel project environment variables before using the panel.
+                </p>
+              </section>
+            ) : !authenticated ? (
+              <section class="mx-auto max-w-xl">
+                <form id="login-form" class="glass-panel p-6 sm:p-8">
+                  <p class="eyebrow">Protected access</p>
+                  <h2 class="mt-4 font-display text-3xl font-black text-platinum">Owner login</h2>
+                  <p class="mt-4 text-base leading-8 text-mist">
+                    Enter the admin password to manage live portfolio content from any device.
+                  </p>
+                  <label class="mt-8 block text-sm text-mist">
+                    <span class="mb-2 block font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ash">Password</span>
+                    <input
+                      id="login-password"
+                      name="password"
+                      type="password"
+                      autocomplete="current-password"
+                      class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-base text-platinum outline-none transition focus:border-ember"
+                    />
+                  </label>
+                  <p id="login-message" class="mt-4 min-h-6 text-sm text-ember"></p>
+                  <button type="submit" class="premium-button mt-2 w-full">Unlock panel</button>
+                </form>
+              </section>
+            ) : (
+              <section class="grid gap-6 xl:grid-cols-[22rem_minmax(0,1fr)]">
+                <aside class="glass-panel p-5 sm:p-6">
+                  <div class="flex items-center justify-between gap-4">
+                    <div>
+                      <p class="eyebrow">Projects</p>
+                      <p class="mt-3 text-sm leading-7 text-mist">Select an existing item or create a new one.</p>
+                    </div>
+                    <button id="new-project-button" type="button" class="ghost-button">New</button>
+                  </div>
+
+                  <div id="project-list" class="mt-6 grid gap-3"></div>
+
+                  <button id="logout-button" type="button" class="ghost-button mt-6 w-full">Logout</button>
+                </aside>
+
+                <div class="glass-panel p-5 sm:p-6">
+                  <div class="flex flex-col gap-3 border-b border-platinum/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                      <p class="eyebrow">Editor</p>
+                      <h2 id="editor-title" class="mt-3 font-display text-3xl font-black text-platinum">New project</h2>
+                    </div>
+                    <p id="save-message" class="text-sm text-ash"></p>
+                  </div>
+
+                  <form id="project-form" class="mt-6 grid gap-8">
+                    <div class="grid gap-4 lg:grid-cols-2">
+                      <label class="block">
+                        <span class="mb-2 block font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ash">Slug</span>
+                        <input id="field-slug" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember" />
+                      </label>
+                      <label class="block">
+                        <span class="mb-2 block font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ash">Year</span>
+                        <input id="field-year" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember" />
+                      </label>
+                      <label class="block">
+                        <span class="mb-2 block font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ash">Client</span>
+                        <input id="field-client" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember" />
+                      </label>
+                      <label class="block">
+                        <span class="mb-2 block font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ash">External video URL</span>
+                        <input id="field-external-link" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember" />
+                      </label>
+                    </div>
+
+                    <div class="grid gap-4 lg:grid-cols-[1fr_auto_auto] lg:items-end">
+                      <label class="block">
+                        <span class="mb-2 block font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ash">Cover image URL</span>
+                        <input id="field-cover" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember" />
+                      </label>
+                      <label class="ghost-button cursor-pointer text-center">
+                        Upload cover
+                        <input id="cover-upload" type="file" accept="image/*" class="hidden" />
+                      </label>
+                      <div class="grid gap-2 text-sm text-ash">
+                        <label class="flex items-center gap-3">
+                          <input id="field-active" type="checkbox" class="h-4 w-4 accent-ember" checked />
+                          Active
+                        </label>
+                        <label class="flex items-center gap-3">
+                          <input id="field-featured" type="checkbox" class="h-4 w-4 accent-ember" />
+                          Featured on home
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="grid gap-4">
+                      <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                        <label class="block flex-1">
+                          <span class="mb-2 block font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ash">Gallery image URLs</span>
+                          <textarea id="field-gallery" rows="6" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember"></textarea>
+                        </label>
+                        <label class="ghost-button cursor-pointer text-center sm:w-52">
+                          Upload gallery images
+                          <input id="gallery-upload" type="file" accept="image/*" multiple class="hidden" />
+                        </label>
+                      </div>
+
+                      <label class="block">
+                        <span class="mb-2 block font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ash">Tools</span>
+                        <textarea id="field-tools" rows="3" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember"></textarea>
+                      </label>
+                    </div>
+
+                    <div class="grid gap-6 xl:grid-cols-2">
+                      <fieldset class="grid gap-4 border border-platinum/10 p-4">
+                        <legend class="px-2 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ember">Portuguese copy</legend>
+                        <label class="block">
+                          <span class="mb-2 block text-sm text-ash">Title</span>
+                          <input id="field-pt-title" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember" />
+                        </label>
+                        <label class="block">
+                          <span class="mb-2 block text-sm text-ash">Category</span>
+                          <input id="field-pt-category" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember" />
+                        </label>
+                        <label class="block">
+                          <span class="mb-2 block text-sm text-ash">Short description</span>
+                          <textarea id="field-pt-description" rows="3" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember"></textarea>
+                        </label>
+                        <label class="block">
+                          <span class="mb-2 block text-sm text-ash">Full description</span>
+                          <textarea id="field-pt-full-description" rows="5" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember"></textarea>
+                        </label>
+                        <label class="block">
+                          <span class="mb-2 block text-sm text-ash">Objective</span>
+                          <textarea id="field-pt-objective" rows="4" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember"></textarea>
+                        </label>
+                        <label class="block">
+                          <span class="mb-2 block text-sm text-ash">Process</span>
+                          <textarea id="field-pt-process" rows="4" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember"></textarea>
+                        </label>
+                      </fieldset>
+
+                      <fieldset class="grid gap-4 border border-platinum/10 p-4">
+                        <legend class="px-2 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-ember">English copy</legend>
+                        <label class="block">
+                          <span class="mb-2 block text-sm text-ash">Title</span>
+                          <input id="field-en-title" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember" />
+                        </label>
+                        <label class="block">
+                          <span class="mb-2 block text-sm text-ash">Category</span>
+                          <input id="field-en-category" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember" />
+                        </label>
+                        <label class="block">
+                          <span class="mb-2 block text-sm text-ash">Short description</span>
+                          <textarea id="field-en-description" rows="3" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember"></textarea>
+                        </label>
+                        <label class="block">
+                          <span class="mb-2 block text-sm text-ash">Full description</span>
+                          <textarea id="field-en-full-description" rows="5" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember"></textarea>
+                        </label>
+                        <label class="block">
+                          <span class="mb-2 block text-sm text-ash">Objective</span>
+                          <textarea id="field-en-objective" rows="4" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember"></textarea>
+                        </label>
+                        <label class="block">
+                          <span class="mb-2 block text-sm text-ash">Process</span>
+                          <textarea id="field-en-process" rows="4" class="w-full border border-platinum/10 bg-carbon px-4 py-3 text-platinum outline-none transition focus:border-ember"></textarea>
+                        </label>
+                      </fieldset>
+                    </div>
+
+                    <div class="flex flex-col gap-3 border-t border-platinum/10 pt-5 sm:flex-row">
+                      <button id="save-project-button" type="submit" class="premium-button">Save project</button>
+                      <button id="delete-project-button" type="button" class="ghost-button">Delete project</button>
+                    </div>
+                  </form>
+                </div>
+              </section>
+            )
+          }
+        </main>
+      )
+    }
+
+    <script
+      is:inline
+      define:vars={{
+        adminConfigured: hasAdminPassword(),
+        authenticated,
+        initialProjects: projects,
+        loginEndpoint: '/api/admin/session',
+        projectEndpoint: '/api/admin/projects',
+        uploadEndpoint: '/api/admin/upload'
+      }}
+    >
+      const loginForm = document.querySelector('#login-form');
+      const loginMessage = document.querySelector('#login-message');
+
+      if (loginForm) {
+        loginForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          loginMessage.textContent = '';
+
+          const formData = new FormData(loginForm);
+          const response = await fetch(loginEndpoint, {
+            method: 'POST',
+            body: formData
+          });
+          const payload = await response.json();
+
+          if (!response.ok) {
+            loginMessage.textContent = payload.error || 'Unable to login.';
+            return;
+          }
+
+          window.location.reload();
+        });
+      }
+
+      if (authenticated) {
+        const listNode = document.querySelector('#project-list');
+        const form = document.querySelector('#project-form');
+        const saveMessage = document.querySelector('#save-message');
+        const editorTitle = document.querySelector('#editor-title');
+        const newButton = document.querySelector('#new-project-button');
+        const deleteButton = document.querySelector('#delete-project-button');
+        const logoutButton = document.querySelector('#logout-button');
+        const coverUpload = document.querySelector('#cover-upload');
+        const galleryUpload = document.querySelector('#gallery-upload');
+
+        const fields = {
+          slug: document.querySelector('#field-slug'),
+          year: document.querySelector('#field-year'),
+          client: document.querySelector('#field-client'),
+          externalLink: document.querySelector('#field-external-link'),
+          cover: document.querySelector('#field-cover'),
+          active: document.querySelector('#field-active'),
+          featured: document.querySelector('#field-featured'),
+          gallery: document.querySelector('#field-gallery'),
+          tools: document.querySelector('#field-tools'),
+          ptTitle: document.querySelector('#field-pt-title'),
+          ptCategory: document.querySelector('#field-pt-category'),
+          ptDescription: document.querySelector('#field-pt-description'),
+          ptFullDescription: document.querySelector('#field-pt-full-description'),
+          ptObjective: document.querySelector('#field-pt-objective'),
+          ptProcess: document.querySelector('#field-pt-process'),
+          enTitle: document.querySelector('#field-en-title'),
+          enCategory: document.querySelector('#field-en-category'),
+          enDescription: document.querySelector('#field-en-description'),
+          enFullDescription: document.querySelector('#field-en-full-description'),
+          enObjective: document.querySelector('#field-en-objective'),
+          enProcess: document.querySelector('#field-en-process')
+        };
+
+        const state = {
+          projects: [...initialProjects],
+          originalSlug: null
+        };
+
+        function blankProject() {
+          return {
+            slug: '',
+            active: true,
+            year: '',
+            client: '',
+            cover: '',
+            gallery: [],
+            externalLink: '',
+            featured: false,
+            tools: [],
+            copy: {
+              pt: {
+                title: '',
+                category: '',
+                description: '',
+                fullDescription: '',
+                objective: '',
+                process: ''
+              },
+              en: {
+                title: '',
+                category: '',
+                description: '',
+                fullDescription: '',
+                objective: '',
+                process: ''
+              }
+            }
+          };
+        }
+
+        function slugify(value) {
+          return String(value || '')
+            .normalize('NFKD')
+            .replace(/[^\w\s-]+/g, '')
+            .trim()
+            .replace(/[\s_]+/g, '-')
+            .replace(/-+/g, '-')
+            .toLowerCase();
+        }
+
+        function parseList(value) {
+          return String(value || '')
+            .split(/\n|,/)
+            .map((item) => item.trim())
+            .filter(Boolean);
+        }
+
+        function setMessage(text, error = false) {
+          saveMessage.textContent = text;
+          saveMessage.className = error ? 'text-sm text-ember' : 'text-sm text-ash';
+        }
+
+        function renderList() {
+          listNode.innerHTML = '';
+
+          state.projects.forEach((project) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className =
+              'w-full border border-platinum/10 bg-carbon px-4 py-3 text-left transition hover:border-ember';
+            button.innerHTML = `
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="font-mono text-[0.64rem] uppercase tracking-[0.22em] text-ember">${project.copy.en.title || project.copy.pt.title || project.slug}</p>
+                  <p class="mt-2 text-sm text-mist">${project.slug}</p>
+                </div>
+                <span class="text-xs uppercase tracking-[0.18em] ${project.active ? 'text-platinum' : 'text-ash'}">${project.active ? 'active' : 'inactive'}</span>
+              </div>
+            `;
+            button.addEventListener('click', () => loadProject(project));
+            listNode.appendChild(button);
+          });
+        }
+
+        function loadProject(project) {
+          state.originalSlug = project.slug;
+          editorTitle.textContent = project.copy.en.title || project.copy.pt.title || project.slug || 'Edit project';
+
+          fields.slug.value = project.slug || '';
+          fields.year.value = project.year || '';
+          fields.client.value = project.client || '';
+          fields.externalLink.value = project.externalLink || '';
+          fields.cover.value = project.cover || '';
+          fields.active.checked = Boolean(project.active);
+          fields.featured.checked = Boolean(project.featured);
+          fields.gallery.value = (project.gallery || []).join('\n');
+          fields.tools.value = (project.tools || []).join(', ');
+
+          fields.ptTitle.value = project.copy.pt.title || '';
+          fields.ptCategory.value = project.copy.pt.category || '';
+          fields.ptDescription.value = project.copy.pt.description || '';
+          fields.ptFullDescription.value = project.copy.pt.fullDescription || '';
+          fields.ptObjective.value = project.copy.pt.objective || '';
+          fields.ptProcess.value = project.copy.pt.process || '';
+
+          fields.enTitle.value = project.copy.en.title || '';
+          fields.enCategory.value = project.copy.en.category || '';
+          fields.enDescription.value = project.copy.en.description || '';
+          fields.enFullDescription.value = project.copy.en.fullDescription || '';
+          fields.enObjective.value = project.copy.en.objective || '';
+          fields.enProcess.value = project.copy.en.process || '';
+        }
+
+        function resetForm() {
+          state.originalSlug = null;
+          editorTitle.textContent = 'New project';
+          const project = blankProject();
+          loadProject(project);
+          state.originalSlug = null;
+        }
+
+        function readFormProject() {
+          const slug = slugify(fields.slug.value || fields.enTitle.value || fields.ptTitle.value);
+          return {
+            slug,
+            active: fields.active.checked,
+            year: fields.year.value.trim(),
+            client: fields.client.value.trim(),
+            cover: fields.cover.value.trim(),
+            gallery: parseList(fields.gallery.value),
+            externalLink: fields.externalLink.value.trim(),
+            featured: fields.featured.checked,
+            tools: parseList(fields.tools.value),
+            copy: {
+              pt: {
+                title: fields.ptTitle.value.trim(),
+                category: fields.ptCategory.value.trim(),
+                description: fields.ptDescription.value.trim(),
+                fullDescription: fields.ptFullDescription.value.trim(),
+                objective: fields.ptObjective.value.trim(),
+                process: fields.ptProcess.value.trim()
+              },
+              en: {
+                title: fields.enTitle.value.trim(),
+                category: fields.enCategory.value.trim(),
+                description: fields.enDescription.value.trim(),
+                fullDescription: fields.enFullDescription.value.trim(),
+                objective: fields.enObjective.value.trim(),
+                process: fields.enProcess.value.trim()
+              }
+            }
+          };
+        }
+
+        async function refreshProjects(focusSlug) {
+          const response = await fetch(projectEndpoint);
+          const payload = await response.json();
+          state.projects = payload.projects || [];
+          renderList();
+
+          const target = state.projects.find((project) => project.slug === focusSlug);
+          if (target) {
+            loadProject(target);
+            return;
+          }
+
+          resetForm();
+        }
+
+        async function uploadFiles(fileList) {
+          const formData = new FormData();
+          formData.set('slug', fields.slug.value || fields.enTitle.value || fields.ptTitle.value || 'project');
+          Array.from(fileList).forEach((file) => formData.append('files', file));
+
+          const response = await fetch(uploadEndpoint, {
+            method: 'POST',
+            body: formData
+          });
+          const payload = await response.json();
+
+          if (!response.ok) {
+            throw new Error(payload.error || 'Upload failed.');
+          }
+
+          return payload.uploads || [];
+        }
+
+        newButton?.addEventListener('click', () => {
+          resetForm();
+          setMessage('Ready for a new project.');
+        });
+
+        logoutButton?.addEventListener('click', async () => {
+          await fetch(loginEndpoint, { method: 'DELETE' });
+          window.location.reload();
+        });
+
+        form?.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          setMessage('Saving...');
+
+          const project = readFormProject();
+          const response = await fetch(projectEndpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              originalSlug: state.originalSlug,
+              project
+            })
+          });
+          const payload = await response.json();
+
+          if (!response.ok) {
+            setMessage(payload.error || 'Unable to save project.', true);
+            return;
+          }
+
+          await refreshProjects(payload.project.slug);
+          setMessage('Project saved.');
+        });
+
+        deleteButton?.addEventListener('click', async () => {
+          if (!state.originalSlug) {
+            setMessage('Select an existing project before deleting it.', true);
+            return;
+          }
+
+          const confirmed = window.confirm(`Delete project "${state.originalSlug}"?`);
+          if (!confirmed) return;
+
+          const response = await fetch(`${projectEndpoint}?slug=${encodeURIComponent(state.originalSlug)}`, {
+            method: 'DELETE'
+          });
+          const payload = await response.json();
+
+          if (!response.ok) {
+            setMessage(payload.error || 'Unable to delete project.', true);
+            return;
+          }
+
+          await refreshProjects();
+          setMessage('Project deleted.');
+        });
+
+        coverUpload?.addEventListener('change', async () => {
+          if (!coverUpload.files?.length) return;
+
+          try {
+            setMessage('Uploading cover...');
+            const [upload] = await uploadFiles(coverUpload.files);
+            if (upload?.url) fields.cover.value = upload.url;
+            setMessage('Cover uploaded.');
+          } catch (error) {
+            setMessage(error instanceof Error ? error.message : 'Upload failed.', true);
+          } finally {
+            coverUpload.value = '';
+          }
+        });
+
+        galleryUpload?.addEventListener('change', async () => {
+          if (!galleryUpload.files?.length) return;
+
+          try {
+            setMessage('Uploading gallery images...');
+            const uploads = await uploadFiles(galleryUpload.files);
+            const urls = uploads.map((item) => item.url).filter(Boolean);
+            const current = parseList(fields.gallery.value);
+            fields.gallery.value = [...current, ...urls].join('\n');
+            setMessage('Gallery images uploaded.');
+          } catch (error) {
+            setMessage(error instanceof Error ? error.message : 'Upload failed.', true);
+          } finally {
+            galleryUpload.value = '';
+          }
+        });
+
+        fields.enTitle?.addEventListener('input', () => {
+          if (!fields.slug.value.trim()) {
+            fields.slug.value = slugify(fields.enTitle.value);
+          }
+        });
+
+        renderList();
+        resetForm();
+      }
+    </script>
+  </body>
+</html>
